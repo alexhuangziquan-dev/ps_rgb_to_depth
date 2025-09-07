@@ -37,3 +37,7 @@ export:
   zpad: 6                         # 连续编号位数：000000
   image_ext: "png"                # images 文件夹保存格式
   overwrite: false                # 若同名存在是否覆盖（默认不覆盖）
+
+# 真实深度尺度；单位举例：米/相对单位
+# 最终输出深度 = scale × 相对深度
+scale: 1.0
