@@ -1,0 +1,39 @@
+# 输入与预处理
+image_path: "data/sample.png"     # main.py 用于演示的单张输入
+mask_path: null                   # 或 "data/mask.png"
+
+# 先中心裁剪为正方形（640x480 -> 480x480），再选择是否缩放到指定分辨率
+center_crop_square: true
+resize_after_crop: null      # 若想保持裁剪后的分辨率，设为 null
+
+# sRGB → 线性空间 + 白平衡
+srgb_linearize: true
+wb_gains: [1.0, 1.0, 1.0]         # R,G,B 通道增益
+
+# “RGB=三盏灯”的光度立体（远场朗伯）
+lights:
+  R: { dir: [  0.000,  0.866, 0.5 ], intensity: 1.0 }  # 上(红)
+  G: { dir: [ -0.866,  0.000, 0.5 ], intensity: 1.0 }  # 右(绿)
+  B: { dir: [  0.000, -0.866, 0.5 ], intensity: 1.0 }  # 下(蓝)
+
+
+
+# 阴影/鲁棒
+shadow_threshold: 0.02
+min_valid_channels: 3
+
+# 深度积分
+integration_method: "fc"          # Frankot–Chellappa
+depth_output_scale: 1.0           # 仅用于可视化（若打开PNG）
+
+# 普通运行(main.py)输出
+save_root: "outputs"
+save_numpy: true                  # 仅保存 depth.npy
+save_visual_png: false            # 如需调试深度png可设 true
+
+# 导出脚本(export_dataset.py)设置（可被命令行覆盖）
+export:
+  dest_root: "dataset_out"        # 输出根目录，内含 images/ 与 w/
+  zpad: 6                         # 连续编号位数：000000
+  image_ext: "png"                # images 文件夹保存格式
+  overwrite: false                # 若同名存在是否覆盖（默认不覆盖）
